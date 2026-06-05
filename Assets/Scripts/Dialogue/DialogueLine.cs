@@ -7,5 +7,5 @@ public class DialogueLine
     public string speakerName;
     public LocalizedString text;
     public AudioClip audio;
-    public float duration = 3f;
+    public float duration = 10f;
 }

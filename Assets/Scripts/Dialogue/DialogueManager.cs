@@ -16,17 +16,30 @@ public class DialogueManager : MonoBehaviour
         StartCoroutine(RunLines(lines));
     }
 
-    IEnumerator RunLines(DialogueLine[] lines)
+IEnumerator RunLines(DialogueLine[] lines)
 {
     foreach (DialogueLine line in lines)
     {
-        string localizedText = line.text.GetLocalizedString();
-        Debug.Log(line.speakerName + ": " + localizedText);
+        var op = line.text.GetLocalizedStringAsync();
+        yield return op;
+
+        string localizedText = op.Result;
+
         dialogueText.text = line.speakerName + ": " + localizedText;
-        audioSource.clip = line.audio;
-        if (line.audio != null) audioSource.Play();
-        yield return new WaitForSeconds(line.duration);
+
+        if (line.audio != null)
+        {
+            audioSource.clip = line.audio;
+            audioSource.Play();
+
+            yield return new WaitWhile(() => audioSource.isPlaying);
+        }
+        else
+        {
+            yield return new WaitForSeconds(line.duration);
+        }
     }
+
     dialogueText.text = "";
 }
 }
