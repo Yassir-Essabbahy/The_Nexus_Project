@@ -8,4 +8,5 @@ public class DialogueLine
     public LocalizedString text;
     public AudioClip audio;
     public float duration = 10f;
+    public DialogueEventType eventType;
 }
