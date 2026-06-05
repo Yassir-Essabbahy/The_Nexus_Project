@@ -25,7 +25,11 @@ IEnumerator RunLines(DialogueLine[] lines)
 
         string localizedText = op.Result;
 
-        dialogueText.text = line.speakerName + ": " + localizedText;
+        if (line.speakerName == "")
+            dialogueText.text = localizedText;
+        
+        else
+            dialogueText.text = line.speakerName + ": " + localizedText;
 
         if (line.audio != null)
         {
